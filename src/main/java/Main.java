@@ -1,9 +1,11 @@
 import java.util.Scanner;
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         // pobierz imiona graczy
-        Scanner scanner = new Scanner(System.in);
+
 
         System.out.println("Podaj imie pierwszego gracza");
         String imie1 = scanner.next();
@@ -25,28 +27,38 @@ public class Main {
     }
 
     private static void game(Player player1, Player player2, Board board) {
-        boolean winnerPresent = false;
-//        while (!winnerPresent) {
+        boolean hasWinner = false;
+        while (!hasWinner) {
             showBoard(board);
             playerPlay(player1, board);
+            hasWinner = hasWinner(board, player1);
 
-            if(hasWinner(board)) {
-//                break;
+            if(hasWinner) {
+                break;
             }
 
             showBoard(board);
             playerPlay(player2, board);
-            winnerPresent = hasWinner(board);
-//        }
+            hasWinner = hasWinner(board, player2);
+        }
+        System.out.println("Gratulacje!");
     }
 
-    private static boolean hasWinner(Board board) {
+    private static boolean hasWinner(Board board, Player player) {
         System.out.println("Sprawdzam czy mamy zwyciezce");
-        return false;
+        return Judge.hasWinner(board, player.getSymbol());
     }
 
     private static void playerPlay(Player player, Board board) {
-        System.out.println("A teraz ruch wykonuje " + player.imie);
+        System.out.println("A teraz ruch wykonuje " + player.getImie());
+        System.out.println("Podaj X");
+        int x = scanner.nextInt();
+
+        System.out.println("Podaj Y");
+        int y = scanner.nextInt();
+
+        board.add(new Position(x, y), player.getSymbol());
+
     }
 
     private static void showBoard(Board board) {

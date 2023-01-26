@@ -7,10 +7,6 @@ public class Board {
 
     public Board(int size) {
         this.size = size;
-        // to bedzie do wywalenia
-        positionsWithSymbols.put(new Position(0,1), "X");
-        positionsWithSymbols.put(new Position(1,1), "O");
-        positionsWithSymbols.put(new Position(2,2), "O");
     }
 
     public void show() {
@@ -18,13 +14,29 @@ public class Board {
             String row = "";
             for(int j = 0; j < size; j++) {
                 if(positionsWithSymbols.containsKey(new Position(i, j))) {
-                    row += positionsWithSymbols.get(new Position(i, j));
+                    row += " " + positionsWithSymbols.get(new Position(i, j)) + " ";
+                    row += "|";
                 }
                 else {
-                    row += " ";
+                    row += "   |";
                 }
             }
             System.out.println(row);
         }
+    }
+
+    void add(Position position, String symbol) {
+        if (positionsWithSymbols.containsKey(position)) {
+            System.out.println("Tu juz cos jest! Tracisz ruch");
+        } else {
+            positionsWithSymbols.put(position, symbol);
+        }
+    }
+
+    public String get(Position position) {
+        if(!positionsWithSymbols.containsKey(position)) {
+            return "";
+        }
+        return positionsWithSymbols.get(position);
     }
 }
